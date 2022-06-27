@@ -8,9 +8,9 @@
       <!-- 登录表单区域 -->
       <el-form
         class="login_form"
-        ref="loginFromRef"
+        ref="loginFormRef"
         :model="loginForm"
-        :rules="loginFromRules"
+        :rules="loginFormRules"
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
@@ -30,7 +30,7 @@
         <!-- 按钮 -->
         <el-form-item class="btns">
           <el-button type="primary" @click="login">登录</el-button>
-          <el-button type="info" @click="resetLoginFrom">重置</el-button>
+          <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -48,14 +48,14 @@ export default {
         password: '123456'
       },
       // 验证表单的验证规则对象
-      loginFromRules: {
+      loginFormRules: {
         // 验证用户是否合法
         username: [
           { required: true, message: '请输入登录名称', trigger: 'blur' },
           { min: 3, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
         ]
       }
@@ -63,13 +63,13 @@ export default {
   },
   methods: {
     // 点击重置按钮，重置表单
-    resetLoginFrom() {
+    resetLoginForm() {
       // console.log(this)
-      this.$refs.loginFromRef.resetFields()
+      this.$refs.loginFormRef.resetFields()
     },
     // 点击登录按钮，预校验表单里面的数据
     login() {
-      this.$refs.loginFromRef.validate(async (valid) => {
+      this.$refs.loginFormRef.validate(async (valid) => {
         // console.log(valid)
         if (!valid) return
         const { data: res } = await this.$http.post('login', this.loginForm)
@@ -93,6 +93,7 @@ export default {
   background-image: linear-gradient(120deg, #3498db, #8e44ad);
   height: 100%;
 }
+
 .login-box {
   width: 450px;
   height: 300px;
@@ -102,6 +103,7 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
   .avatar_box {
     height: 130px;
     width: 130px;
@@ -113,6 +115,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
+
     img {
       width: 100%;
       height: 100%;
